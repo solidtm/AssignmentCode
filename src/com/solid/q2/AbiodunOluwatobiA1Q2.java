@@ -1,9 +1,7 @@
 package com.solid.q2;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 //* WHAT AM I DOING? - Simulate playing a lottery, to determine the chane of winning
 // * HOW AM I DOING IT? -
@@ -11,29 +9,31 @@ public class AbiodunOluwatobiA1Q2 {
 
     static List<Client> clients = new ArrayList();
     static List<Booking> bookings = new ArrayList();
+    static Map<String, Integer> bookingMap = new HashMap();
 
     public static void main(String[] args) {
-        System.out.println("Welcome to fitness center...");
-        System.out.println("Would you like to make a client (c), booking (b), or quit (q)? ");
 
-        Scanner scanner = new Scanner(System.in);
-        String choice = scanner.nextLine();
+        while(true){
+            System.out.println("Would you like to make a client (c), booking (b), or quit (q)? ");
+            Scanner scanner = new Scanner(System.in);
+            String choice = scanner.nextLine();
 
-        if(choice.equals("c")){
-            createClient();
-        }else if(choice.equals("b")){
-            createBooking();
-        }else if(choice.equals("q")){
-            System.out.println("Program terminated successfully...");
-        }else {
-            System.out.println("You have entered an invalid option, " +
-                    "\n please enter a valid option to continue, client (c), booking (b), or quit (q)...");
+            if(choice.equals("c")){
+                createClient(scanner);
+            }else if(choice.equals("b")){
+                createBooking();
+            }else if(choice.equals("q")){
+                System.out.println("Program terminated successfully...");
+                break;
+            }else {
+                System.out.println("You have entered an invalid option, " +
+                        "\n please enter a valid option to continue, client (c), booking (b), or quit (q)...");
+            }
         }
     }
 
-    private static void createClient(){
+    private static void createClient(Scanner scanner){
         //Prompt the client's information:
-        Scanner scanner = new Scanner(System.in);
         String name;
         int age;
         Boolean[] accessPaid = new Boolean[3]; // [true, false, false]
@@ -43,6 +43,8 @@ public class AbiodunOluwatobiA1Q2 {
         name = scanner.nextLine();
         System.out.println("Please enter the client’s age: ");
         age = scanner.nextInt();
+        scanner.nextLine();
+
         System.out.println("Will the client have access to the track?");
         bookingAnswers = scanner.nextLine();
         accessPaid[0] = bookingAnswers.equals("y");
@@ -55,7 +57,6 @@ public class AbiodunOluwatobiA1Q2 {
 
         Client client = new Client(name, age, accessPaid);
         clients.add(client);
-        scanner.close();
     }
 
     private static void createBooking(){
@@ -114,8 +115,17 @@ public class AbiodunOluwatobiA1Q2 {
         day = Integer.parseInt(dateAndTImeArray[2]);
         hour = Integer.parseInt(dateAndTImeArray[3]);
 
-        Booking booking = new Booking(year, month, day, hour, facility);
-        bookings.add(booking);
+        String capacityKey = dateAndTime + facility;
+        Integer capacity = bookingMap.get(capacityKey);
+
+        if(bookingMap.isEmpty() || (capacity != null && capacity < 5)){
+            bookingMap.put(capacityKey, bookingMap.getOrDefault(capacityKey, 0) + 1);
+            Booking booking = new Booking(year, month, day, hour, facility);
+            bookings.add(booking);
+            System.out.println("Booking successful.");
+        }else{
+            System.out.println("Booking denied. Capacity exceeded.");
+        }
     }
 }
 

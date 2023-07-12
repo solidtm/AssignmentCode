@@ -8,6 +8,7 @@ public class Booking{
     private String facility;
 
 
+
     public Booking(int year, int month, int day, int hour, String facility) {
         this.year = year;
         this.month = month;
@@ -27,6 +28,7 @@ public class Booking{
     public String getFacility() {return facility;}
 
     public boolean equals(Booking booking1, Booking booking2) {
-        return (booking1.getFacility().equals(booking2.getFacility())) && (booking1.getHour() == booking2.getHour());
+        return (booking1.getFacility().equals(booking2.getFacility())) && (booking1.getHour() == booking2.getHour())
+        && (booking1.getYear() == booking2.getYear()) && (booking1.getMonth() == booking2.getMonth()) && (booking1.getDay() == booking2.getDay());
     }
 }

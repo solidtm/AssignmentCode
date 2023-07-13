@@ -2,27 +2,16 @@ package com.solid;
 
 import java.util.*;
 
-/*
- * Lottery Odds:
- * Players chooses a set of numbers
- * These numbers are compared against a random;y chosen set of winning numbers
+/**
  *
- * WHAT AM I DOING? - Simulate playing a lottery, to determine the chane of winning
- * HOW AM I DOING IT? -
+ * COMP 1020 SECTION A1Q1
+ * INSTRUCTOR    Heather C. Matheson
+ * ASSIGNMENT    Assignment 1, question 1
+ * @author       Abiodun Oluwatobi, 7897247
+ * @version      13th July, 2023
  *
- *
- *
- *
- *     Player 1 -> Lotto 6/49
- *     Randomly chosen player numbers -> [2, 6, 7, 14, 18, 29] -> chosen from 1 - 49
- *     Randomly chosen winning numbers -> [14, 16, 38, 2, 29, 7] -> chosen from 1 - 49
- *     k   v  k   v
- *    [1 : 0, 2 : 0, 3 : 7, .... 49 -> 0] -> MAP
- *    [] -> SET
- *
- *    winnerCountVariable = 1
- *
- * */
+ * PURPOSE: Simulate playing a lottery, to determine the chance of winning.
+ */
 public class AbiodunOluwatobiA1Q1 {
 
     private static int winnerCount = 0;
@@ -31,7 +20,7 @@ public class AbiodunOluwatobiA1Q1 {
     static Set<Integer> winningSet = new HashSet<>();
 
     public static void main(String[] args) {
-        long noOfTrials = 10;
+        long noOfTrials = 50000000;
         for (int i = 1; i <= noOfTrials; i++) {
             simulate();
         }
@@ -41,6 +30,11 @@ public class AbiodunOluwatobiA1Q1 {
                 "The chance of winning Lotto Max is " + printWinEstimate(noOfTrials) + " percent.");
     }
 
+    /**
+     *
+     * @return  nothing is returned by this function and is used to simulate
+     *          the lottery choice to be played by the user
+     */
     public static void simulate() {
         //Ask the user to pick a choice for simulation
         System.out.println("Please input an option to simulate: ");
@@ -62,6 +56,12 @@ public class AbiodunOluwatobiA1Q1 {
         }
     }
 
+    /**
+     * @param setSize integer value representing the lottery choice set size (LOTTO 6/49 or LOTTO MAX)
+     * @param maxChoice integer value representing the maximum inclusivity for random values to be picked.
+     * @return  nothing is returned by this function and is used to handle picking set of random numbers
+     *          based on the lottery choice picked by the user.
+     */
     public static void handleCase(int setSize, int maxChoice) {
         //choose randomly setSize player numbers in playerSet from 1-maxChoice
         Random random = new Random();
@@ -95,13 +95,22 @@ public class AbiodunOluwatobiA1Q1 {
         winningSet.clear();
     }
 
+    /**
+     * @return  nothing is returned by this function and is used to print the number of
+     *          occurrences of a number in the winning set.
+     */
     public static void printTable() {
         System.out.println("Number:\tTimes Seen:\n");
         for (Map.Entry<Integer, Long> entry : winningNumberMap.entrySet()) {
-            System.out.println(entry.getKey() + "\t" + entry.getValue() + "\n");
+            System.out.println("\t\t" + entry.getKey() + "\t" + entry.getValue() + "\n");
         }
     }
 
+    /**
+     * @param numberOfTrials long variable which represents the number of times
+     *                       the user tries to win a lottery
+     * @return  double value is returned which is the result of the winnerCount divided by the numberOfTrials
+     */
     public static double printWinEstimate(long numberOfTrials) {
         return (double) winnerCount / numberOfTrials;
     }

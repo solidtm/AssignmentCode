@@ -1,10 +1,18 @@
-package com.solid.q2;
-
+package com.solid;
 
 import java.util.*;
 
-//* WHAT AM I DOING? - Simulate playing a lottery, to determine the chane of winning
-// * HOW AM I DOING IT? -
+/**
+ *
+ * COMP 1020 SECTION A1Q2
+ * INSTRUCTOR    Heather C. Matheson
+ * ASSIGNMENT    Assignment 1, question 2
+ * @author       Abiodun Oluwatobi, 7897247
+ * @version      13th July, 2023
+ *
+ * PURPOSE: Store a list of clients, and allow the user to create new clients and make bookings to use the fitness facilities.
+ */
+
 public class AbiodunOluwatobiA1Q2 {
 
     static List<Client> clients = new ArrayList();
@@ -31,6 +39,13 @@ public class AbiodunOluwatobiA1Q2 {
             }
         }
     }
+
+    /**
+     *
+     * @param scanner  Scanner class object to receive user input
+     *
+     * @return  nothing is returned by this function and is used to create a client
+     */
 
     private static void createClient(Scanner scanner){
         //Prompt the client's information:
@@ -59,6 +74,11 @@ public class AbiodunOluwatobiA1Q2 {
         clients.add(client);
     }
 
+    /**
+     *
+     * This function takes in no parameter and returns no value
+     * This function creates a booking for a client
+     */
     private static void createBooking(){
         Scanner scanner = new Scanner(System.in);
         String clientName;
@@ -100,6 +120,13 @@ public class AbiodunOluwatobiA1Q2 {
         }
     }
 
+    /**
+     *
+     * @param scanner  Scanner class object to receive user input
+     * @param facility String representing the facility to be booked
+     *
+     * @return    nothing is returned by this function, used to register a client's booking for a specific facility
+     */
     private static void registerBooking(Scanner scanner, String facility){
         String dateAndTime;
         int year;
@@ -127,7 +154,64 @@ public class AbiodunOluwatobiA1Q2 {
             System.out.println("Booking denied. Capacity exceeded.");
         }
     }
+
+
+    /**
+     * Client class to define the client object
+     */
+    public static class Client{
+        private String name;
+        private int age;
+        private Boolean[] accessPaid;
+
+        public Client(String name, int age, Boolean[] accessPaid){
+            this.name = name;
+            this.age = age;
+            this.accessPaid = accessPaid;
+        }
+
+        public String getName(){return name;}
+        public int getAge(){return age;}
+        public Boolean[] getAccessPaid(){return accessPaid;}
+    }
+
+    /**
+     * Booking class to define the Booking object
+     */
+    public static class Booking{
+        private int year;
+        private int month;
+        private int day;
+        private int hour;
+        private String facility;
+
+        public Booking(int year, int month, int day, int hour, String facility) {
+            this.year = year;
+            this.month = month;
+            this.day = day;
+            this.hour = hour;
+            this.facility = facility;
+        }
+
+        public int getYear() {return year;}
+
+        public int getMonth() {return month;}
+
+        public int getDay() {return day;}
+
+        public int getHour() {return hour;}
+
+        public String getFacility() {return facility;}
+
+        public boolean equals(Booking booking1, Booking booking2) {
+            return (booking1.getFacility().equals(booking2.getFacility())) && (booking1.getHour() == booking2.getHour())
+                    && (booking1.getYear() == booking2.getYear()) && (booking1.getMonth() == booking2.getMonth()) && (booking1.getDay() == booking2.getDay());
+        }
+    }
 }
+
+
+
 
 
 

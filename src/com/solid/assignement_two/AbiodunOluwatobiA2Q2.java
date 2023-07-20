@@ -1,4 +1,4 @@
-package com.solid.assignement_two;
+package com.solid.assignment_two;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -8,7 +8,7 @@ import java.util.*;
 public class AbiodunOluwatobiA2Q2{
     static ArrayList<Word> wordArrayList = new ArrayList<>();
     static String line = "";
-    static Map<String, Integer> wordsMap = new HashMap<>();
+    static ArrayList<String>[] wordFreqStore;
 
     public static void main(String[] args){
         // accept the file names from user
@@ -17,13 +17,12 @@ public class AbiodunOluwatobiA2Q2{
         String bookFileName = scanner.nextLine();
         System.out.println("Please enter the name of the file with words to find:");
         String wordsFileName = scanner.nextLine();
-        System.out.println();
 
         //read the book
         readFile(bookFileName, true);
 
-        wordsMap.clear();
-        wordArrayList.clear();
+        // wordsMap.clear(); 
+        wordFreqStore = null;
         System.out.println();
 
         //read the words to find
@@ -38,28 +37,70 @@ public class AbiodunOluwatobiA2Q2{
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
 
             while ((line = br.readLine()) != null){
-                line = line.replaceAll("\\p{Punct}", ""); //remove punctuations
-                line = line.trim();                                      //remove whitespaces
-                line = line.toLowerCase();                               // convert to lowercase
-                String[] words = line.split(" ");                        // split into an array
+                line = line.replaceAll("\\p{Punct}", "");   //remove punctuations
+                line = line.trim();                                           //remove whitespaces
+                line = line.toLowerCase();                                    // convert to lowercase
+                String[] words = line.split(" ");                       // split into an array
 
-                for (String value : words){                              // loop through the array and pass each word into map
+                for (String value : words){                                   // loop through the array and pass each word into map
                     //put the value in the wordsMap and track it's number occurence
-                    wordsMap.put(value, wordsMap.getOrDefault(value, 0) + 1); 
+
+                    if(wordFreqStore == null){
+                        ArrayList<String> list = new ArrayList<String>();
+                        list.add(value);
+                        wordFreqStore = new ArrayList[2];
+                        wordFreqStore[1] = list; 
+                    }else{
+                        for(int index = 1; index < wordFreqStore.length; index++){
+                            ArrayList<String> list = wordFreqStore[index];
+                            ArrayList<String> prevList = new ArrayList<>();
+
+                            if(list.contains(value)){
+                                list.remove(value);
+                                prevList = list;
+
+                                if(index + 1 < wordFreqStore.length){
+                                    wordFreqStore[index + 1].add(value);
+                                    break;
+                                }else{
+                                    wordFreqStore = new ArrayList[wordFreqStore.length + 1];
+                                    wordFreqStore[index] = prevList;
+
+                                    ArrayList<String> newList = new ArrayList<>();
+                                    newList.add(value);
+                                    wordFreqStore[index + 1] = newList;
+                                    break;
+                                }
+                            }else{
+                                wordFreqStore[1].add(value);
+                                break;
+                            }
+                        }
+                    }
                 }
             }
 
-            //Loop through the map and print it's key - value pairs.
-            for(Map.Entry<String, Integer> entry : wordsMap.entrySet()) {   
-                Word word = new Word(entry.getKey(), entry.getValue());     
-                wordArrayList.add(word);
+            wordArrayList = new ArrayList<>();
+        
+            for(int i = 1; i < wordFreqStore.length; i++) {   
+                ArrayList<String> list = wordFreqStore[i];
+
+                for(String value : list){
+                    Word word = new Word(value, i);  
+                    wordArrayList.add(word);
+                }
             }
 
             if(flag) calculateStatistics(wordArrayList);
             else {
-                for(Map.Entry<String, Integer> entry : wordsMap.entrySet()){
-                    System.out.println("Word: " + entry.getKey() + " Count: " + entry.getValue());
+                for(int i = 1; i < wordFreqStore.length; i++){
+                    ArrayList<String> list = wordFreqStore[i];
+
+                    for(String value : list){
+                        System.out.println("Word: " + value + " Count: " + i);
+                    }
                 }
+                
                 System.out.println("Program terminated successfully");
             }
 

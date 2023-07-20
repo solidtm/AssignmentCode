@@ -1,7 +1,6 @@
-package com.solid.assignement_two;
+package com.solid.assignment_two;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
@@ -9,7 +8,7 @@ import java.util.*;
 public class AbiodunOluwatobiA2Q1{
     static Word[] wordArray;
     static String line = "";
-    static Map<String, Integer> wordsMap = new HashMap<>();
+    static ArrayList<String>[] wordFreqStore;
 
     public static void main(String[] args){
         // accept the file names from user
@@ -22,7 +21,8 @@ public class AbiodunOluwatobiA2Q1{
         //read the book
         readFile(bookFileName, true);
 
-        wordsMap.clear();
+        // wordsMap.clear(); 
+        wordFreqStore = null;
         System.out.println();
 
         //read the words to find
@@ -44,25 +44,76 @@ public class AbiodunOluwatobiA2Q1{
 
                 for (String value : words){                                   // loop through the array and pass each word into map
                     //put the value in the wordsMap and track it's number occurence
-                    wordsMap.put(value, wordsMap.getOrDefault(value, 0) + 1); 
+
+                    if(wordFreqStore == null){
+                        ArrayList<String> list = new ArrayList<String>();
+                        list.add(value);
+                        wordFreqStore = new ArrayList[2];
+                        wordFreqStore[1] = list; 
+                    }else{
+                        for(int index = 1; index < wordFreqStore.length; index++){
+                            ArrayList<String> list = wordFreqStore[index];
+                            ArrayList<String> prevList = new ArrayList<>();
+
+                            if(list.contains(value)){
+                                list.remove(value);
+                                prevList = list;
+
+                                if(index + 1 < wordFreqStore.length){
+                                    wordFreqStore[index + 1].add(value);
+                                    break;
+                                }else{
+                                    wordFreqStore = new ArrayList[wordFreqStore.length + 1];
+                                    wordFreqStore[index] = prevList;
+
+                                    ArrayList<String> newList = new ArrayList<>();
+                                    newList.add(value);
+                                    wordFreqStore[index + 1] = newList;
+                                    break;
+                                }
+                            }else{
+                                wordFreqStore[1].add(value);
+                                break;
+                            }
+                        }
+                    }
                 }
             }
 
-            wordArray = new Word[wordsMap.size()];
+            wordArray = new Word[wordFreqStore.length];
             int index = 0;
+        
+            for(int i = 1; i < wordFreqStore.length; i++) {   
+                ArrayList<String> list = wordFreqStore[i];
 
-            //Loop through the map and print it's key - value pairs.
-            for(Map.Entry<String, Integer> entry : wordsMap.entrySet()) {   
-                Word word = new Word(entry.getKey(), entry.getValue());     
-                wordArray[index] = word;
-                index++;
+                for(String value : list){
+                    Word word = new Word(value, i);  
+
+                    if(index < wordArray.length){
+                        wordArray[index++] = word;
+                    }else{
+                        Word[] prevArray = wordArray;
+                        wordArray = new Word[wordArray.length + 1];
+                        int j;
+
+                        for(j = 0; j < prevArray.length; j++){
+                            wordArray[j] = prevArray[j];
+                        }
+                        wordArray[index++] = word;
+                    }
+                }
             }
 
             if(flag) calculateStatistics(wordArray);
             else {
-                for(Map.Entry<String, Integer> entry : wordsMap.entrySet()){
-                    System.out.println("Word: " + entry.getKey() + " Count: " + entry.getValue());
+                for(int i = 1; i < wordFreqStore.length; i++){
+                    ArrayList<String> list = wordFreqStore[i];
+
+                    for(String value : list){
+                        System.out.println("Word: " + value + " Count: " + i);
+                    }
                 }
+                
                 System.out.println("Program terminated successfully");
             }
 
@@ -78,18 +129,25 @@ public class AbiodunOluwatobiA2Q1{
         int denominator = 0;
 
         for(Word word : wordArray){
-            if(word.getNoOfOccurence() == 1){noOfUniqueWords++;}
+            if(word != null){
+                if(word.getNoOfOccurence() == 1){noOfUniqueWords++;}
+            }
+           
         }
 
         for(Word word : wordArray){
-            if(word.getNoOfOccurence() == 1){
-                sum += word.getWord().length();
+            if(word != null){
+                if(word.getNoOfOccurence() == 1){
+                    sum += word.getWord().length();
+                }
             }
         }
 
         for(Word word : wordArray){
-            numerator += (word.getWord().length() * word.getNoOfOccurence());
-            denominator += word.getNoOfOccurence();
+            if(word != null){
+                numerator += (word.getWord().length() * word.getNoOfOccurence());
+                denominator += word.getNoOfOccurence();
+            }
         }
 
 

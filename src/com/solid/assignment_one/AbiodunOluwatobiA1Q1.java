@@ -1,4 +1,4 @@
-package com.solid;
+package com.solid.assignment_one;
 
 import java.util.*;
 

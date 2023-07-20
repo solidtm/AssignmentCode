@@ -1,4 +1,4 @@
-package com.solid;
+package com.solid.assignment_one;
 
 import java.util.*;
 
@@ -18,6 +18,7 @@ public class AbiodunOluwatobiA1Q2 {
     static List<Client> clients = new ArrayList();
     static List<Booking> bookings = new ArrayList();
     static Map<String, Integer> bookingMap = new HashMap();
+    static final double PI = 3.142;
 
     public static void main(String[] args) {
 

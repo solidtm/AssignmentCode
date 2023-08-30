@@ -4,7 +4,6 @@ public class LinkedLists {
     Node head;
     Node tail;
     int size;
-
     public LinkedLists() {
         this.head = null;
         this.tail = null;
@@ -70,6 +69,39 @@ public class LinkedLists {
             temp = temp.next;
         }
         System.out.println("END");
+    }
+
+    public int deleteFirst(){
+        int val = head.data;
+        head = head.next;
+
+        if(head == null){
+            tail = null;
+        }
+        size--;
+
+        return val;
+    }
+
+    public Node get(int index){   //gets the node at any index.
+        Node node = head;
+
+        for (int i = 0; i < index; i++) {
+            node = node.next;
+        }
+
+        return node;
+    }
+
+    public int deleteLast(){
+        if(size <= 1) return deleteFirst();
+
+        Node secondLast = get(size - 2);   //node points to the second last item in the ist
+        int val = tail.data;
+        tail = secondLast;
+        tail.next = null;
+
+        return val;
     }
 
     public static class Node{

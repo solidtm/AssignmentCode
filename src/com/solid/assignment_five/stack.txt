@@ -1,0 +1,38 @@
+class TokenStack implements Stack {
+    private class Node {
+        Token data;
+        Node next;
+
+        Node(Token data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    private Node top;
+
+    public TokenStack() {
+        top = null;
+    }
+
+    public void push(Token t) {
+        Node newNode = new Node(t);
+        newNode.next = top;
+        top = newNode;
+    }
+
+    public Token peek() {
+        return top != null ? top.data : null;   condition ?  return met condition : return not met condition
+    }
+
+    public Token pop() {
+        if (top == null) return null;
+        Token poppedToken = top.data;
+        top = top.next;
+        return poppedToken;
+    }
+
+    public boolean isEmpty() {
+        return top == null;
+    }
+}

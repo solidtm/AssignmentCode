@@ -14,25 +14,24 @@ import java.util.Scanner;
  */
 public class AbiodunOluwatobiA4Q2 {
     public static void main(String[] args) {
-        System.out.format("Casting %f to int gives %d", 23.8, (int)23.8);
 
-//        Scanner scanner = new Scanner(System.in);
-//
-//        System.out.println("Please enter a 9x9 Sudoku board:");
-//        String input = scanner.nextLine();
-//
-//        Sudoku sudoku = new Sudoku(input);
-//
-//        System.out.println("The board is:");
-//        sudoku.printBoard();
-//
-//        if (sudoku.validateBoard()) {
-//            System.out.println("The board is VALID.");
-//        } else {
-//            System.out.println("The board is INVALID.");
-//        }
-//
-//        System.out.println("Program terminated normally.");
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Please enter a 9x9 Sudoku board:");
+        String input = scanner.nextLine();
+
+        Sudoku sudoku = new Sudoku(input);
+
+        System.out.println("The board is:");
+        sudoku.printBoard();
+
+        if (sudoku.validateBoard()) {
+            System.out.println("The board is VALID.");
+        } else {
+            System.out.println("The board is INVALID.");
+        }
+
+        System.out.println("Program terminated normally.");
     }
 
     /**

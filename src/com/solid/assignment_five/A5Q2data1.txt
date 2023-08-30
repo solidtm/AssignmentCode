@@ -1,0 +1,39 @@
+CART
+4L milk, 6.59
+chocolate ice cream, 8.99
+frozen peas, 2.50
+CART
+apples, 3.50
+bananas, 1.86
+avocados, 5.00
+peaches, 6.99
+strawberries, 4.99
+mushrooms, 3.25
+tomatoes, 4.28
+spinach, 3.64
+CART
+cheese, 8.23
+crackers, 2.40
+CART
+salmon, 28.99
+CART
+rice, 10.49
+flour, 8.76
+sugar, 4.52
+coffee, 7.99
+tea, 3.78
+extra large eggs, 6.83
+bacon, 6.73
+bread, 4.20
+butter, 6.39
+cheese, 8.23
+crackers, 2.40
+CART
+pizza sauce, 4.85
+spaghetti, 2.00
+parmesan cheese, 5.67
+CART
+4L milk, 6.59
+CART
+vanilla ice cream, 8.59
+brownies, 6.50

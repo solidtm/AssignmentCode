@@ -38,7 +38,7 @@ public class AbiodunOluwatobiA4Q2 {
      * Sudoku class to define the Sudoku object
      */
     public static class Sudoku{
-        private final int[][] board; //2D integer array board to store the Sudoku board.
+        private final int[][] board; //2D integer array board to store the Sudoku token.
 
         /**
          * @param input string input to initialize the board.
@@ -132,6 +132,7 @@ public class AbiodunOluwatobiA4Q2 {
             for (int row = 0; row < 9; row++) {
                 for (int col = 0; col < 9; col++) {
                     int value = board[row][col];
+
                     System.out.print(value == -1 ? "-" : value);
                     if (col < 8) {
                         System.out.print(" ");

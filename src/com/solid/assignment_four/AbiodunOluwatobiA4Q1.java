@@ -104,7 +104,7 @@ public class AbiodunOluwatobiA4Q1 {
         public Grid(String fileName) throws IOException {
             //read dimensions from file
             BufferedReader reader = new BufferedReader(new FileReader(fileName));
-            String[] dimensions = reader.readLine().split(" ");
+            String[] dimensions = reader.readLine().split(" "); //["10", "10"]
             numRows = Integer.parseInt(dimensions[0]);
             numCols = Integer.parseInt(dimensions[1]);
             cells = new Cell[numRows][numCols];
@@ -117,7 +117,7 @@ public class AbiodunOluwatobiA4Q1 {
 
             String line;
             while((line = reader.readLine()) != null){
-                String[] coordinates = line.split(" ");
+                String[] coordinates = line.split(" "); //["4", "2"]
                 int r = Integer.parseInt(coordinates[0]);
                 int c = Integer.parseInt(coordinates[1]);
                 cells[r][c].setAlive(true);
@@ -168,6 +168,7 @@ public class AbiodunOluwatobiA4Q1 {
          */
         public int numNeighbours(int r, int c){
             int count = 0;
+
             for(int dr = -1; dr <= 1; dr++){
                 for(int dc = -1; dc <= 1; dc++){
                     if(dr == 0 && dc == 0){
@@ -187,6 +188,7 @@ public class AbiodunOluwatobiA4Q1 {
          */
         public Grid nextGeneration(){
             Grid nextGen = new Grid(numRows, numCols);
+
             for (int r = 0; r < numRows; r++) {
                 for (int c = 0; c < numCols; c++) {
                     int neighbors = numNeighbours(r, c); //calculate number of alive neighbours
@@ -211,15 +213,18 @@ public class AbiodunOluwatobiA4Q1 {
         @Override
         public String toString(){
             StringBuilder builder = new StringBuilder();
+
             for (int r = 0; r < numRows; r++) {
                 for (int c = 0; c < numCols; c++) {
                     builder.append(cells[r][c]);
+
                     if (c < numCols - 1) {
                         builder.append(" ");
                     }
                 }
                 builder.append("\n");
             }
+
             return builder.toString();
         }
     }

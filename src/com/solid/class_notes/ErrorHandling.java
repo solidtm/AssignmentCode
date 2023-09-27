@@ -21,6 +21,8 @@ public class ErrorHandling {
             validateNum(-2);
         }catch (CustomException ex){
             System.out.println("Custom exception caught: " + ex.getMessage());
+        }finally {
+            System.out.println("Custom exception caught: ");
         }
     }
 

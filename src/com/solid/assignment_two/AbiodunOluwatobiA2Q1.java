@@ -130,14 +130,14 @@ public class AbiodunOluwatobiA2Q1{
 
         for(Word word : wordArray){
             if(word != null){
-                if(word.getNoOfOccurence() == 1){noOfUniqueWords++;}
+                if(word.getNoOfOccurrence() == 1){noOfUniqueWords++;}
             }
            
         }
 
         for(Word word : wordArray){
             if(word != null){
-                if(word.getNoOfOccurence() == 1){
+                if(word.getNoOfOccurrence() == 1){
                     sum += word.getWord().length();
                 }
             }
@@ -145,8 +145,8 @@ public class AbiodunOluwatobiA2Q1{
 
         for(Word word : wordArray){
             if(word != null){
-                numerator += (word.getWord().length() * word.getNoOfOccurence());
-                denominator += word.getNoOfOccurence();
+                numerator += (word.getWord().length() * word.getNoOfOccurrence());
+                denominator += word.getNoOfOccurrence();
             }
         }
 
@@ -159,12 +159,12 @@ public class AbiodunOluwatobiA2Q1{
 
    static class Word{
         private String word;
-        private int noOfOccurence;
+        private int noOfOccurrence;
 
         //constructor
-        public Word(String word, int noOfOccurence){
+        public Word(String word, int noOfOccurrence){
             this.word = word;
-            this.noOfOccurence = noOfOccurence;
+            this.noOfOccurrence = noOfOccurrence;
         }
 
         //getters 
@@ -172,13 +172,13 @@ public class AbiodunOluwatobiA2Q1{
             return word;
         }
 
-        public int getNoOfOccurence() {
-            return noOfOccurence;
+        public int getNoOfOccurrence() {
+            return noOfOccurrence;
         }
 
         @Override
         public String toString(){
-            return "Word: " + word + ", Occurence: " + noOfOccurence;
+            return "Word: " + word + ", Occurence: " + noOfOccurrence;
         }
     }
 }

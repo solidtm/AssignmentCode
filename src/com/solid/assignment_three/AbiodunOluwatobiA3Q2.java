@@ -17,52 +17,56 @@ import java.util.Scanner;
  * PURPOSE: Writing a pattern matching function.
  */
 public class AbiodunOluwatobiA3Q2 {
-    public static boolean matchPattern(String pattern, String line) {
-        return matchPatternHelper(pattern, 0, line, 0);
+    public static boolean matchPattern(String pattern, String str) {
+        return matchPatternHelper(pattern, 0, str, 0);
     }
 
-    private static boolean matchPatternHelper(String pattern, int index, String line, int lineIndex) {
-        // Base case 1: If both pattern and line are fully processed, it's a match
-        if (index == pattern.length() && lineIndex == line.length()) {
+    private static boolean matchPatternHelper(String pattern, int patternIndex, String str, int strIndex) {
+        // Base case 1: If both pattern and str are fully processed, it's a match
+        if (patternIndex == pattern.length() && strIndex == str.length()) {
             return true;
         }
 
-        // Base case 2: If only the pattern is fully processed, but not the line, it's not a match
-        if (index == pattern.length()) {
+        // Base case 2: If only the pattern is fully processed, but not the str, it's not a match
+        if (patternIndex == pattern.length()) {
             return false;
         }
 
+        //Recursive case
+        //“[afc]x” matches the line “I like fax lots”.
         // Check if the next character in the pattern is an asterisk
-        if (index + 1 < pattern.length() && pattern.charAt(index + 1) == '*') {
+        if (patternIndex + 1 < pattern.length() && pattern.charAt(patternIndex + 1) == '*') {
             // Match zero or more characters with '*'
-            if(matchPatternHelper(pattern, index + 2, line, lineIndex)){
+            if(matchPatternHelper(pattern, patternIndex + 2, str, strIndex)){
                 return true;
             }
 
-            while(lineIndex < line.length() && (pattern.charAt(index) == line.charAt(lineIndex) || pattern.charAt(index) == '.')){
-                if(matchPatternHelper(pattern, index + 2, line, lineIndex)){
+            while(strIndex < str.length() && (pattern.charAt(patternIndex) == str.charAt(strIndex) || pattern.charAt(patternIndex) == '*')){
+                if(matchPatternHelper(pattern, patternIndex + 2, str, strIndex)){
                     return true;
                 }
-                lineIndex++;
+                strIndex++;
             }
 
             return false;
-        } else if (pattern.charAt(index) == '[') {
+        } else if (pattern.charAt(patternIndex) == '[') {
             // Find the closing bracket for the character set
-            int closingBracketIndex = pattern.indexOf(']', index);
+            int closingBracketIndex = pattern.indexOf(']', patternIndex);
             if(closingBracketIndex == -1) return false;
+
+            //“[afc]x”   string =  “I like fax lots”.
             // Extract the characters between brackets
-            String stringBetweenBraces = pattern.substring(index + 1, closingBracketIndex);
+            String stringBetweenBraces = pattern.substring(patternIndex + 1, closingBracketIndex);
             // Check if the line's character at the current index matches any character in the character set
-            if (stringBetweenBraces.indexOf(line.charAt(lineIndex)) >= 0) {
-                return matchPatternHelper(pattern, closingBracketIndex + 1, line, lineIndex + 1);
+            if (stringBetweenBraces.indexOf(str.charAt(strIndex)) >= 0) {
+                return matchPatternHelper(pattern, closingBracketIndex + 1, str, strIndex + 1);
             } else {
                 return false;
             }
         } else {
             // Check if the current character in the pattern matches the corresponding character in the line
-            if (lineIndex < line.length() && pattern.charAt(index) == line.charAt(lineIndex)) {
-                return matchPatternHelper(pattern, index + 1, line, lineIndex + 1);
+            if (strIndex < str.length() && pattern.charAt(patternIndex) == str.charAt(strIndex)) {
+                return matchPatternHelper(pattern, patternIndex + 1, str, strIndex + 1);
             } else {
                 return false;
             }
@@ -76,10 +80,7 @@ public class AbiodunOluwatobiA3Q2 {
         System.out.println("Please enter the name of the data file: ");
         fileName = scanner.nextLine();
 
-        File directory = new File("");
-        String filePath = directory.getAbsolutePath() + fileName;
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String pattern = reader.readLine();  //reading the first line
             String line;                        //other strings to match the pattern
             while ((line = reader.readLine()) != null) {
